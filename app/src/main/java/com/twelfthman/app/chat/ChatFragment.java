@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.twelfthman.app.R;
 import com.twelfthman.app.TwelfthManApplication;
@@ -20,11 +24,15 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class ChatFragment extends Fragment {
 
     @InjectView(R.id.list_chat)
     RecyclerView listChats;
+
+    @InjectView(R.id.send_message)
+    EditText sendMessage;
 
     ChatAdapter chatAdapter;
 
@@ -58,13 +66,21 @@ public class ChatFragment extends Fragment {
         }
         chatAdapter.setChats(chats);
 
-//        TwelfthManApplication app = (TwelfthManApplication) getActivity().getApplication();
-//        int teamId = app.getTeamId();
-//        String teamName = "";
-//        app.getMatch()
-//        if (teamId == app.getMatch().teamId1) {
-//            teamName = app.getMatch()
-//        }
+        sendMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_NULL
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    ChatMessage cm = new ChatMessage();
+                    cm.setName("Liverpool fan");
+                    cm.setMessage(((EditText) v).getText().toString());
+                    chatAdapter.addChat(cm);
+                    v.setText("");
+
+                }
+                return true;
+            }
+        });
 
         return view;
     }
@@ -122,6 +138,8 @@ public class ChatFragment extends Fragment {
         {
             ChatView view = new ChatView(context, viewGroup);
             view.setListener(listener);
+
+
             return view;
         }
 
