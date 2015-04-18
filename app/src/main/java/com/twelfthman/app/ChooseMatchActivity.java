@@ -1,8 +1,6 @@
 package com.twelfthman.app;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import butterknife.ButterKnife;
@@ -37,6 +36,9 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
     @InjectView(R.id.list_matches)
     RecyclerView listMatches;
 
+    @InjectView(R.id.v_loading)
+    View vLoading;
+
     MatchAdapter matchAdapter;
 
     @Override
@@ -52,7 +54,6 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
         matchAdapter.setListener(this);
         listMatches.setAdapter(matchAdapter);
 
-        final Dialog dialog = ProgressDialog.show(this, null, "Loading matches...");
         new AsyncTask<Void, Void, List<Match>>()
         {
             @Override
@@ -116,7 +117,7 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
             @Override
             protected void onPostExecute(List<Match> matches)
             {
-                dialog.dismiss();
+                vLoading.setVisibility(View.GONE);
                 matchAdapter.setMatches(matches);
             }
         }.execute();
@@ -125,7 +126,7 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
     private void gotoMain(final Match match)
     {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        builderSingle.setTitle("Who are you supporting?");
+        builderSingle.setTitle("Who are ya?");
         builderSingle.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
             @Override
@@ -138,7 +139,7 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_singlechoice);
         arrayAdapter.add(match.teamName1);
         arrayAdapter.add(match.teamName2);
-        arrayAdapter.add("I'm a neutral");
+        arrayAdapter.add("Neutral");
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
