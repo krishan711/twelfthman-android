@@ -71,9 +71,8 @@ public class ChatFragment extends Fragment {
         sendMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    sendChat("Liverpool fan", ((EditText) v).getText().toString());
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    sendChat("Liverpool fan", sendMessage.getText().toString());
                     v.setText("");
                 }
                 return true;
