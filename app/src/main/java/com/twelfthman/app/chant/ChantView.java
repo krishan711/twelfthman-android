@@ -34,7 +34,6 @@ public class ChantView extends RecyclerView.ViewHolder {
     TextView txtChantLyrics;
 
 
-
     protected ChantView(View view)
     {
         super(view);

@@ -52,7 +52,7 @@ public class ChantFragment extends Fragment {
             chant.setTeam("Chant Team");
             chant.setTitle("Chant " + i);
             chant.setLyrics("Chant lyrics" + i);
-
+            chants.add(chant);
         }
         chantAdapter.setChants(chants);
 
