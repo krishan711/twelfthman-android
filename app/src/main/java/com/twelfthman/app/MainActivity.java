@@ -33,6 +33,9 @@ public class MainActivity extends ActionBarActivity
 
         vPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         vTabs.setViewPager(vPager);
+
+        Match match = ((TwelfthManApplication) getApplication()).getMatch();
+        getSupportActionBar().setTitle(match.teamName1 + " vs " + match.teamName2);
     }
 
     class PagerAdapter extends FragmentPagerAdapter

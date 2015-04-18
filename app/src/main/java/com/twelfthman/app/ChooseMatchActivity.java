@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -84,25 +83,22 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
 
                             cal.setTime(date);
                             Log.i("ChooseMatchActivity", String.valueOf(cal.get(Calendar.DAY_OF_YEAR)));
-                            if (!(2015 == cal.get(Calendar.YEAR) && 81 == cal.get(Calendar.DAY_OF_YEAR)))
+                            if (2015 == cal.get(Calendar.YEAR) && 81 == cal.get(Calendar.DAY_OF_YEAR))
                             {
-                                Log.i("ChooseMatchActivity", matchObject.toString());
-                                continue;
+                                String stadiumName = matchObject.getJSONObject("stadium").getString("name");
+                                JSONArray teams = matchObject.getJSONArray("teams");
+                                JSONObject team1 = teams.getJSONObject(0);
+                                int teamId1 = team1.getInt("id");
+                                String teamName1 = team1.getString("name");
+                                String teamCode1 = team1.getString("abbreviation");
+
+                                JSONObject team2 = teams.getJSONObject(1);
+                                int teamId2 = team2.getInt("id");
+                                String teamName2 = team2.getString("name");
+                                String teamCode2 = team2.getString("abbreviation");
+
+                                matches.add(new Match(matchId, teamName1, teamName2, teamCode1, teamCode2, teamId1, teamId2, stadiumName, date));
                             }
-
-                            String stadiumName = matchObject.getJSONObject("stadium").getString("name");
-                            JSONArray teams = matchObject.getJSONArray("teams");
-                            JSONObject team1 = teams.getJSONObject(0);
-                            int teamId1 = team1.getInt("id");
-                            String teamName1 = team1.getString("name");
-                            String teamCode1 = team1.getString("abbreviation");
-
-                            JSONObject team2 = teams.getJSONObject(1);
-                            int teamId2 = team2.getInt("id");
-                            String teamName2 = team2.getString("name");
-                            String teamCode2 = team2.getString("abbreviation");
-
-                            matches.add(new Match(matchId, teamName1, teamName2, teamCode1, teamCode2, teamId1, teamId2, stadiumName, date));
                         }
 
                     } else {
@@ -147,7 +143,8 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int teamId = which == 0 ? match.teamId1 : which == 1 ? match.teamId2 : -1;
-                PreferenceManager.getDefaultSharedPreferences(ChooseMatchActivity.this).edit().putInt("TEAM_ID", teamId).apply();
+                ((TwelfthManApplication) getApplication()).setTeamId(teamId);
+                ((TwelfthManApplication) getApplication()).setMatch(match);
                 startActivity(new Intent(ChooseMatchActivity.this, MainActivity.class));
                 finish();
             }
