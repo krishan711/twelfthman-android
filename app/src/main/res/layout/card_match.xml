@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:background="#77ffffff"
+        android:background="#ffffff"
         android:foreground="@drawable/selectable_background"
         custom:cardUseCompatPadding="true"
         custom:cardCornerRadius="2dp">
@@ -24,8 +24,111 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/img_match_team_icon_1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    tools:src="@drawable/arsenal"/>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/txt_match_team_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="Arsenal"
+                        android:textSize="16sp"
+                        android:textColor="#777777"/>
+
+                <TextView
+                        android:id="@+id/txt_match_team_code_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="ARS"
+                        android:textSize="14sp"
+                        android:textColor="#aaaaaa"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="vs"
+                    android:textSize="14sp"
+                    android:textColor="#aaaaaa"/>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/txt_match_team_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="Reading"
+                        android:textSize="16sp"
+                        android:textColor="#777777"/>
+
+                <TextView
+                        android:id="@+id/txt_match_team_code_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="REA"
+                        android:textSize="14sp"
+                        android:textColor="#aaaaaa"/>
+
+            </LinearLayout>
+
+            <ImageView
+                    android:id="@+id/img_match_team_icon_2"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    tools:src="@drawable/swansea"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/txt_match_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                tools:text="at The Emirates"/>
+
+        <TextView
+                android:id="@+id/txt_match_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
+                tools:text="started at 16:00"/>
 
     </LinearLayout>
 
