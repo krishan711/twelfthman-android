@@ -12,14 +12,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.pusher.client.Pusher;
 import com.pusher.client.channel.PrivateChannel;
-import com.pusher.client.channel.SubscriptionEventListener;
 import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
-import com.twelfthman.app.Match;
 import com.twelfthman.app.R;
-import com.twelfthman.app.TwelfthManApplication;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,36 +45,29 @@ public class ChatFragment extends Fragment {
         listChats.setAdapter(chatAdapter);
 
         pusher = new Pusher("116349");
-        pusher.connect(new ConnectionEventListener() {
+        pusher.connect(new ConnectionEventListener()
+        {
             @Override
-            public void onConnectionStateChange(ConnectionStateChange change) {
+            public void onConnectionStateChange(ConnectionStateChange change)
+            {
                 System.out.println("State changed to " + change.getCurrentState() +
                         " from " + change.getPreviousState());
             }
 
             @Override
-            public void onError(String message, String code, Exception e) {
+            public void onError(String message, String code, Exception e)
+            {
                 System.out.println("There was a problem connecting!");
             }
         }, ConnectionState.ALL);
 
-        Match match = ((TwelfthManApplication) getActivity().getApplication()).getMatch();
-
-        channel = pusher.subscribePrivate(match.matchId + "-chat");
-        channel.bind("client-new-comment", new SubscriptionEventListener() {
-            @Override
-            public void onEvent(String channel, String event, String data) {
-                try
-                {
-                    JSONObject chat = new JSONObject(data);
-                    chatAdapter.addChat(new ChatMessage(chat.getString("team"), chat.getString("message")));
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        TwelfthManApplication app = (TwelfthManApplication) getActivity().getApplication();
+//        int teamId = app.getTeamId();
+//        String teamName = "";
+//        app.getMatch()
+//        if (teamId == app.getMatch().teamId1) {
+//            teamName = app.getMatch()
+//        }
 
         return view;
     }

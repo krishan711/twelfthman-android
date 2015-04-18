@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity
 
     class PagerAdapter extends FragmentPagerAdapter
     {
-        private final String[] TITLES = {"CHANTS", "CHAT"};
+        private final String[] TITLES = {"CHANTS", "CHAT", "STATS"};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -63,6 +63,8 @@ public class MainActivity extends ActionBarActivity
                 case 0:
                     return new ChantFragment();
                 case 1:
+                    return new ChatFragment();
+                case 2:
                     return new ChatFragment();
             }
 

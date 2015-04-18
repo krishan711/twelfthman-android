@@ -12,6 +12,7 @@ import com.twelfthman.app.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by dhilipb on 18/04/2015.
@@ -29,9 +30,18 @@ public class ChantView extends RecyclerView.ViewHolder {
 
     @InjectView(R.id.txt_chant_title)
     TextView txtChantTitle;
-
     @InjectView(R.id.txt_chant_lyrics)
     TextView txtChantLyrics;
+
+
+    @OnClick(R.id.v_content)
+    void onClick(View v) {
+        if (txtChantLyrics.getMaxLines() == 2) {
+            txtChantLyrics.setMaxLines(Integer.MAX_VALUE);
+        } else {
+            txtChantLyrics.setMaxLines(2);
+        }
+    }
 
 
     protected ChantView(View view)
@@ -45,6 +55,7 @@ public class ChantView extends RecyclerView.ViewHolder {
     {
         this(LayoutInflater.from(context).inflate(R.layout.card_chant, parent, false));
         this.context = context;
+
     }
 
     public void setListener(Listener listener)
