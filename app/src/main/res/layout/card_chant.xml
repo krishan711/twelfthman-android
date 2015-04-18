@@ -25,58 +25,56 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:weightSum="5">
+            android:layout_marginRight="12dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="4">
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_chant_title"
-                android:textSize="20dp"
-                android:text="Chant Name"
-                />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_chant_title"
+                    android:textSize="18sp"
+                    tools:text="Chant Name"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_chant_lyrics"
-                android:lines="2"
-                android:text="Lyrics"
-                />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_chant_lyrics"
+                    android:lines="2"
+                    tools:text="Lyrics"/>
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/up"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                />
+            <ImageButton
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:padding="6dp"
+                    android:src="@drawable/up"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/selectable_background"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/now"
-                android:scaleType="centerInside"
-                android:layout_marginTop="10dp"
-                />
+            <ImageButton
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:padding="4dp"
+                    android:src="@drawable/now"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/selectable_background"/>
 
-            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

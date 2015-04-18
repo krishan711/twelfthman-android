@@ -19,6 +19,11 @@ android {
     }
 }
 
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
@@ -26,4 +31,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.jpardogo.materialtabstrip:library:1.0.6'
+    compile 'com.pusher:pusher-java-client:0.3.1'
 }
