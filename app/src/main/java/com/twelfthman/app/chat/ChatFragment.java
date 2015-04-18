@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.pusher.client.Pusher;
-import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.PrivateChannel;
 import com.pusher.client.channel.SubscriptionEventListener;
 import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
@@ -32,7 +32,7 @@ public class ChatFragment extends Fragment {
 
     ChatAdapter chatAdapter;
     Pusher pusher;
-    Channel channel;
+    PrivateChannel channel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +64,7 @@ public class ChatFragment extends Fragment {
 
         Match match = ((TwelfthManApplication) getActivity().getApplication()).getMatch();
 
-        channel = pusher.subscribe(match.matchId + "-chat");
+        channel = pusher.subscribePrivate(match.matchId + "-chat");
         channel.bind("client-new-comment", new SubscriptionEventListener() {
             @Override
             public void onEvent(String channel, String event, String data) {
@@ -90,7 +90,7 @@ public class ChatFragment extends Fragment {
             JSONObject json = new JSONObject();
             json.put("team", team);
             json.put("message", message);
-//            channel.trigger("client-new-comment", )
+            channel.trigger("client-new-comment", json.toString());
         }
         catch (Exception e)
         {
