@@ -70,8 +70,6 @@ public class ChantFragment extends Fragment {
     }
 
 
-
-
     private static class ChantAdapter extends RecyclerView.Adapter<ChantView>
     {
         private Context context;

@@ -1,9 +1,9 @@
 package com.twelfthman.app.chat;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.twelfthman.app.R;
+import com.twelfthman.app.chant.Chant;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,14 +22,10 @@ import butterknife.InjectView;
 
 public class ChatFragment extends Fragment {
 
-    @InjectView(R.id.list_chants)
+    @InjectView(R.id.list_chat)
     RecyclerView listChats;
 
-    ChantAdapter chatAdapter;
-
-    public ChatFragment() {
-
-    }
+    ChatAdapter chatAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,13 +39,23 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        ButterKnife.inject(view);
+        ButterKnife.inject(this,view);
 
         listChats.setHasFixedSize(true);
         listChats.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        chatAdapter = new ChantAdapter(view.getContext());
+        chatAdapter = new ChatAdapter(view.getContext());
         listChats.setAdapter(chatAdapter);
+
+
+        List<ChatMessage> chats = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            ChatMessage chat = new ChatMessage();
+            chat.setName("Name " + i);
+            chat.setMessage("Message " + i);
+            chats.add(chat);
+        }
+        chatAdapter.setChats(chats);
 
         return view;
     }
@@ -63,21 +70,18 @@ public class ChatFragment extends Fragment {
         super.onDetach();
     }
 
-
-
-
-    private static class ChantAdapter extends RecyclerView.Adapter<ChatView>
+    private static class ChatAdapter extends RecyclerView.Adapter<ChatView>
     {
         private Context context;
         private List<ChatMessage> chants;
         private ChatView.Listener listener;
 
-        private ChantAdapter(Context context)
+        private ChatAdapter(Context context)
         {
             this.context = context;
         }
 
-        public void setChants(Collection<ChatMessage> chants)
+        public void setChats(Collection<ChatMessage> chants)
         {
             this.chants = new ArrayList<>(chants);
             notifyDataSetChanged();
@@ -110,7 +114,7 @@ public class ChatFragment extends Fragment {
         @Override
         public void onBindViewHolder(ChatView chantView, int i)
         {
-            chantView.setChant(getItem(i));
+            chantView.setChat(getItem(i));
         }
     }
 

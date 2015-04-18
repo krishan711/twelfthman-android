@@ -5,11 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.twelfthman.app.Match;
 import com.twelfthman.app.R;
+import com.twelfthman.app.chant.Chant;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by dhilipb on 18/04/2015.
@@ -22,6 +25,14 @@ public class ChatView extends RecyclerView.ViewHolder {
     }
 
     public Listener listener;
+    private Context context;
+    private ChatMessage chat;
+
+    @InjectView(R.id.txt_chat_name)
+    TextView txtChatName;
+
+    @InjectView(R.id.txt_chat_message)
+    TextView txtChatMessage;
 
     protected ChatView(View view)
     {
@@ -31,7 +42,7 @@ public class ChatView extends RecyclerView.ViewHolder {
 
     public ChatView(Context context, ViewGroup parent)
     {
-        this(LayoutInflater.from(context).inflate(R.layout.card_chant, parent, false));
+        this(LayoutInflater.from(context).inflate(R.layout.card_chat, parent, false));
     }
 
     public void setListener(Listener listener)
@@ -39,8 +50,10 @@ public class ChatView extends RecyclerView.ViewHolder {
         this.listener = listener;
     }
 
-    public void setChant(ChatMessage chant)
+    public void setChat(ChatMessage chat)
     {
-        // TODO
+        this.chat = chat;
+        txtChatName.setText(chat.getName());
+        txtChatMessage.setText(chat.getMessage());
     }
 }
