@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.pusher.client.Pusher;
 import com.twelfthman.app.R;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -19,6 +21,9 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,6 +39,7 @@ public class ChantFragment extends Fragment
     View vLoading;
 
     ChantAdapter chantAdapter;
+    Pusher pusher;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,8 @@ public class ChantFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chant, container, false);
         ButterKnife.inject(this, view);
+
+        pusher = new Pusher("116349");
 
         listChants.setHasFixedSize(true);
         listChants.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -60,26 +68,34 @@ public class ChantFragment extends Fragment
                 try
                 {
                     HttpClient httpclient = new DefaultHttpClient();
-                    HttpResponse response = httpclient.execute(new HttpGet("https://2d7a0216.ngrok.io/matches/39"));
+                    HttpResponse response = httpclient.execute(new HttpGet("https://2d7a0216.ngrok.io/chants/liverpool"));
                     StatusLine statusLine = response.getStatusLine();
                     if (statusLine.getStatusCode() == HttpStatus.SC_OK)
                     {
                         ByteArrayOutputStream out = new ByteArrayOutputStream();
                         response.getEntity().writeTo(out);
                         String responseString = out.toString();
+                        JSONArray responseObject = new JSONArray(responseString);
+                        Log.i("ChooseMatchActivity", responseObject.toString());
+                        for (int i=0; i<responseObject.length(); i++)
+                        {
+                            try
+                            {
+                                JSONObject matchObject = responseObject.getJSONObject(i);
+                                String title = matchObject.getString("title");
+                                String lyrics = matchObject.getString("lyric");
+                                chants.add(new Chant("", title, lyrics));
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
-                catch (IOException e)
+                catch (IOException | JSONException e)
                 {
                     e.printStackTrace();
-                }
-
-                for (int i = 1; i <= 10; i++) {
-                    Chant chant = new Chant();
-                    chant.setTeam("Chant Team");
-                    chant.setTitle("Chant " + i);
-                    chant.setLyrics("Chant lyrics" + i);
-                    chants.add(chant);
                 }
 
                 return chants;
@@ -153,6 +169,7 @@ public class ChantFragment extends Fragment
         {
             chantView.setChant(getItem(i));
         }
+
     }
 
 }

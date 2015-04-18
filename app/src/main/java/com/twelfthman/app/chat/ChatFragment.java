@@ -1,6 +1,5 @@
 package com.twelfthman.app.chat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,16 +8,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.twelfthman.app.R;
-import com.twelfthman.app.chant.Chant;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.pusher.client.Pusher;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.SubscriptionEventListener;
+import com.pusher.client.connection.ConnectionEventListener;
+import com.pusher.client.connection.ConnectionState;
+import com.pusher.client.connection.ConnectionStateChange;
+import com.twelfthman.app.Match;
+import com.twelfthman.app.R;
+import com.twelfthman.app.TwelfthManApplication;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatFragment extends Fragment {
 
@@ -26,12 +31,8 @@ public class ChatFragment extends Fragment {
     RecyclerView listChats;
 
     ChatAdapter chatAdapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    Pusher pusher;
+    Channel channel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,27 +48,54 @@ public class ChatFragment extends Fragment {
         chatAdapter = new ChatAdapter(view.getContext());
         listChats.setAdapter(chatAdapter);
 
+        pusher = new Pusher("116349");
+        pusher.connect(new ConnectionEventListener() {
+            @Override
+            public void onConnectionStateChange(ConnectionStateChange change) {
+                System.out.println("State changed to " + change.getCurrentState() +
+                        " from " + change.getPreviousState());
+            }
 
-        List<ChatMessage> chats = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            ChatMessage chat = new ChatMessage();
-            chat.setName("Name " + i);
-            chat.setMessage("Message " + i);
-            chats.add(chat);
-        }
-        chatAdapter.setChats(chats);
+            @Override
+            public void onError(String message, String code, Exception e) {
+                System.out.println("There was a problem connecting!");
+            }
+        }, ConnectionState.ALL);
+
+        Match match = ((TwelfthManApplication) getActivity().getApplication()).getMatch();
+
+        channel = pusher.subscribe(match.matchId + "-chat");
+        channel.bind("client-new-comment", new SubscriptionEventListener() {
+            @Override
+            public void onEvent(String channel, String event, String data) {
+                try
+                {
+                    JSONObject chat = new JSONObject(data);
+                    chatAdapter.addChat(new ChatMessage(chat.getString("team"), chat.getString("message")));
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
+    private void sendChat(String team, String message)
+    {
+        try
+        {
+            JSONObject json = new JSONObject();
+            json.put("team", team);
+            json.put("message", message);
+//            channel.trigger("client-new-comment", )
+        }
+        catch (Exception e)
+        {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        }
     }
 
     private static class ChatAdapter extends RecyclerView.Adapter<ChatView>
@@ -79,11 +107,12 @@ public class ChatFragment extends Fragment {
         private ChatAdapter(Context context)
         {
             this.context = context;
+            this.chants = new ArrayList<>();
         }
 
-        public void setChats(Collection<ChatMessage> chants)
+        public void addChat(ChatMessage message)
         {
-            this.chants = new ArrayList<>(chants);
+            this.chants.add(message);
             notifyDataSetChanged();
         }
 
@@ -116,6 +145,7 @@ public class ChatFragment extends Fragment {
         {
             chantView.setChat(getItem(i));
         }
+
     }
 
 }

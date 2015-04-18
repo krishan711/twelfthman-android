@@ -83,7 +83,6 @@ public class ChooseMatchActivity extends ActionBarActivity implements MatchCardV
                             Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(matchDate);
 
                             cal.setTime(date);
-                            Log.i("ChooseMatchActivity", String.valueOf(cal.get(Calendar.DAY_OF_YEAR)));
                             if (2015 == cal.get(Calendar.YEAR) && 81 == cal.get(Calendar.DAY_OF_YEAR))
                             {
                                 String stadiumName = matchObject.getJSONObject("stadium").getString("name");

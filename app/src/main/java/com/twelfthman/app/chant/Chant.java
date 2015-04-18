@@ -9,6 +9,13 @@ public class Chant {
     private String title;
     private String lyrics;
 
+    public Chant(String team, String title, String lyrics)
+    {
+        this.team = team;
+        this.title = title;
+        this.lyrics = lyrics;
+    }
+
     public String getTeam() {
         return team;
     }
