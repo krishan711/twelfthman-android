@@ -22,10 +22,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_margin="12dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,6 +35,7 @@
                 android:id="@+id/txt_chat_name"
                 android:textSize="10dp"
                 android:text="Chant Name"
+                android:textColor="#FA7832"
                 />
 
             <TextView
@@ -45,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_chat_message"
                 android:textSize="16dp"
-                android:lines="2"
                 android:text="Message"
                 />
 

@@ -34,18 +34,21 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_chant_title"
-                    android:textSize="18sp"
-                    tools:text="Chant Name"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_chant_title"
+                android:textSize="18dp"
+                android:text="Chant Name"
+                android:textColor="#FA7832"
+                />
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_chant_lyrics"
-                    android:lines="2"
-                    tools:text="Lyrics"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_chant_lyrics"
+                android:maxLines="2"
+                tools:text="Lyrics"
+                />
 
         </LinearLayout>
 
