@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.astuetz.PagerSlidingTabStrip;
+import com.twelfthman.app.chant.ChantFragment;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -56,9 +57,9 @@ public class MainActivity extends ActionBarActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new Fragment();
+                    return new ChantFragment();
                 case 1:
-                    return new Fragment();
+                    return new ChantFragment();
             }
 
             return null;
