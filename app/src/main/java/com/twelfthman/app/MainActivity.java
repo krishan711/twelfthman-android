@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.twelfthman.app.chant.ChantFragment;
+import com.twelfthman.app.chat.ChatFragment;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -62,7 +63,7 @@ public class MainActivity extends ActionBarActivity
                 case 0:
                     return new ChantFragment();
                 case 1:
-                    return new ChantFragment();
+                    return new ChatFragment();
             }
 
             return null;
