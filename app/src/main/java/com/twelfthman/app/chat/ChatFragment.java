@@ -1,17 +1,15 @@
-package com.twelfthman.app.chant;
+package com.twelfthman.app.chat;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.twelfthman.app.Match;
-import com.twelfthman.app.MatchCardView;
 import com.twelfthman.app.R;
 
 import java.util.ArrayList;
@@ -21,40 +19,36 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ChantFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
     @InjectView(R.id.list_chants)
-    RecyclerView listChants;
+    RecyclerView listChats;
 
-    ChantAdapter chantAdapter;
+    ChantAdapter chatAdapter;
+
+    public ChatFragment() {
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chant, container, false);
-        ButterKnife.inject(this, view);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        listChants.setHasFixedSize(true);
-        listChants.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        ButterKnife.inject(view);
 
-        chantAdapter = new ChantAdapter(view.getContext());
-        listChants.setAdapter(chantAdapter);
+        listChats.setHasFixedSize(true);
+        listChats.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        List<Chant> chants = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            Chant chant = new Chant();
-            chant.setTeam("Chant Team");
-            chant.setTitle("Chant " + i);
-            chant.setLyrics("Chant lyrics" + i);
-
-        }
-        chantAdapter.setChants(chants);
+        chatAdapter = new ChantAdapter(view.getContext());
+        listChats.setAdapter(chatAdapter);
 
         return view;
     }
@@ -72,24 +66,24 @@ public class ChantFragment extends Fragment {
 
 
 
-    private static class ChantAdapter extends RecyclerView.Adapter<ChantView>
+    private static class ChantAdapter extends RecyclerView.Adapter<ChatView>
     {
         private Context context;
-        private List<Chant> chants;
-        private ChantView.Listener listener;
+        private List<ChatMessage> chants;
+        private ChatView.Listener listener;
 
         private ChantAdapter(Context context)
         {
             this.context = context;
         }
 
-        public void setChants(List<Chant> chants)
+        public void setChants(Collection<ChatMessage> chants)
         {
-            this.chants = chants;
+            this.chants = new ArrayList<>(chants);
             notifyDataSetChanged();
         }
 
-        public void setListener(ChantView.Listener listener)
+        public void setListener(ChatView.Listener listener)
         {
             this.listener = listener;
         }
@@ -100,21 +94,21 @@ public class ChantFragment extends Fragment {
             return chants != null ? chants.size() : 0;
         }
 
-        public Chant getItem(int position)
+        public ChatMessage getItem(int position)
         {
             return chants.get(position);
         }
 
         @Override
-        public ChantView onCreateViewHolder(ViewGroup viewGroup, int i)
+        public ChatView onCreateViewHolder(ViewGroup viewGroup, int i)
         {
-            ChantView view = new ChantView(context, viewGroup);
+            ChatView view = new ChatView(context, viewGroup);
             view.setListener(listener);
             return view;
         }
 
         @Override
-        public void onBindViewHolder(ChantView chantView, int i)
+        public void onBindViewHolder(ChatView chantView, int i)
         {
             chantView.setChant(getItem(i));
         }
