@@ -25,7 +25,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment
+{
 
     @InjectView(R.id.list_chat)
     RecyclerView listChats;
@@ -38,12 +39,12 @@ public class ChatFragment extends Fragment {
     PrivateChannel channel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        ButterKnife.inject(this,view);
+        ButterKnife.inject(this, view);
 
         listChats.setHasFixedSize(true);
         listChats.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -67,11 +68,32 @@ public class ChatFragment extends Fragment {
                 System.out.println("There was a problem connecting!");
             }
         }, ConnectionState.ALL);
+//        Match match = ((TwelfthManApplication) getActivity().getApplication()).getMatch();
+//        channel = pusher.subscribePrivate(match.matchId + "-chat");
+//        channel.bind("client-new-comment", new SubscriptionEventListener()
+//        {
+//            @Override
+//            public void onEvent(String channel, String event, String data)
+//            {
+//                try
+//                {
+//                    JSONObject chat = new JSONObject(data);
+//                    chatAdapter.addChat(new ChatMessage(chat.getString("team"), chat.getString("message")));
+//                }
+//                catch (JSONException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
-        sendMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        sendMessage.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if (actionId == EditorInfo.IME_ACTION_DONE)
+                {
                     sendChat("Liverpool fan", sendMessage.getText().toString());
                     v.setText("");
                 }
@@ -89,11 +111,12 @@ public class ChatFragment extends Fragment {
             JSONObject json = new JSONObject();
             json.put("team", team);
             json.put("message", message);
+            chatAdapter.addChat(new ChatMessage(team, message));
             channel.trigger("client-new-comment", json.toString());
         }
         catch (Exception e)
         {
-
+            e.printStackTrace();
         }
     }
 
@@ -137,7 +160,6 @@ public class ChatFragment extends Fragment {
             ChatView view = new ChatView(context, viewGroup);
             view.setListener(listener);
 
-
             return view;
         }
 
@@ -146,7 +168,5 @@ public class ChatFragment extends Fragment {
         {
             chantView.setChat(getItem(i));
         }
-
     }
-
 }

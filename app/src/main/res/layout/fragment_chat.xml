@@ -29,6 +29,7 @@
             android:id="@+id/send_message"
             android:background="@android:color/white"
             android:imeOptions="actionDone"
+            android:singleLine="true"
             android:paddingTop="15dp"
             android:paddingRight="10dp"
             android:paddingBottom="15dp"
