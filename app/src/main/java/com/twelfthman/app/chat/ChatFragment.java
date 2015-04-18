@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.twelfthman.app.R;
+import com.twelfthman.app.TwelfthManApplication;
 import com.twelfthman.app.chant.Chant;
 
 import java.util.ArrayList;
@@ -57,6 +58,14 @@ public class ChatFragment extends Fragment {
         }
         chatAdapter.setChats(chats);
 
+//        TwelfthManApplication app = (TwelfthManApplication) getActivity().getApplication();
+//        int teamId = app.getTeamId();
+//        String teamName = "";
+//        app.getMatch()
+//        if (teamId == app.getMatch().teamId1) {
+//            teamName = app.getMatch()
+//        }
+
         return view;
     }
 
@@ -79,12 +88,17 @@ public class ChatFragment extends Fragment {
         private ChatAdapter(Context context)
         {
             this.context = context;
+            this.chants = new ArrayList<>();
         }
 
         public void setChats(Collection<ChatMessage> chants)
         {
             this.chants = new ArrayList<>(chants);
             notifyDataSetChanged();
+        }
+
+        public void addChat(ChatMessage chant) {
+            this.chants.add(chant);
         }
 
         public void setListener(ChatView.Listener listener)
